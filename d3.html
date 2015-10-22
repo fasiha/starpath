@@ -68,20 +68,10 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-paths =
-    [ posVec.aldebaran, posVec.sol ].map(data => svg.append("path")
-                                                     .datum(objToDataVec(data))
-                                                     .attr("class", "line")
-                                                     .attr("d", line));
-
-/* // Show line between two paths at starting time (now)
-var gl = svg.append('g').attr("class", "hour-lines");
-gl.append('path')
-    .datum(objToDataVec(posVec.sol.slice(0, 1))
-               .concat(objToDataVec(posVec.aldebaran.slice(0, 1))))
-    .attr("class", "hour-line")
-    .attr("d", line);
-*/
+paths = [posVec.aldebaran].map(data => svg.append("path")
+                                           .datum(objToDataVec(data))
+                                           .attr("class", "line")
+                                           .attr("d", line));
 
 var gr = svg.append("g")
              .attr("class", "r axis")

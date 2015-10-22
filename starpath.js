@@ -62,10 +62,21 @@ var meTime = d =>
 
 // For plot
 var now =  new Date();
-var dateVec =
-    _.range(1*60).map(h => new Date((new Date(now)).setMinutes(now.getMinutes() + h)));
+
+var add = (x, to, set, get) =>
+    new Date(set.bind(new Date(to))(get.bind(to)() + x));
+
+var dateTo24Hours = start => _.range(24).map(
+    h => add(h, start, Date.prototype.setHours, Date.prototype.getHours));
+
+var next24Hours = dateTo24Hours(now);
+var dayEveryFortnightForYear = _.flatten(
+    _.range(0, 365, 15)
+        .map(day => dateTo24Hours(add(day, now, Date.prototype.setDate,
+                                      Date.prototype.getDate))));
+
+var dateVec = dayEveryFortnightForYear;
 var posVec = {
   aldebaran : dateVec.map(d => meTimeObj(d, aldebaranCelestial)),
   sol : dateVec.map(d => meTimeObj(d, solCelestial))
 };
-
