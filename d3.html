@@ -18,7 +18,7 @@
   stroke-dasharray: 1,4;
 }
 
-.axis :last-of-type circle {
+.axis :first-of-type circle {
   stroke: #333;
   stroke-dasharray: none;
 }
@@ -65,7 +65,7 @@ var svg = d3.select("body").append("svg")
 var gr = svg.append("g")
     .attr("class", "r axis")
   .selectAll("g")
-    .data(r.ticks(5).slice(1))
+    .data(r.ticks(7).slice(0, -1))
   .enter().append("g");
 
 gr.append("circle")
