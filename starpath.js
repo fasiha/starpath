@@ -57,6 +57,6 @@ var meTime = d =>
 // For plot
 var now =  new Date();
 var dateVec =
-    _.range(2*60).map(h => new Date((new Date(now)).setMinutes(now.getMinutes() + h)));
+    _.range(24*60).map(h => new Date((new Date(now)).setMinutes(now.getMinutes() + h)));
 var posVec = dateVec.map(meTime);
 
