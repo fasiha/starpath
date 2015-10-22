@@ -38,18 +38,24 @@ var geo = RaDec2AzEl(55.8, 19.7, 50, 10,
 var hmsToDeg = (h, m, s) => (h + m / 60 + s / 3600) * (15 / 1);
 var dmsToDeg = (d, m, s) => d + m / 60 + s / 3600;
 
+var solCelestial = {
+  ra : hmsToDeg(13, 42, 32.13),
+  dec : dmsToDeg(-10, 59, 55.2)
+};
 var aldebaranCelestial = {
   ra : hmsToDeg(4, 35, 55.239),
-    dec : dmsToDeg(16, 30, 33.49)
+  dec : dmsToDeg(16, 30, 33.49)
 };
 var beavercreekOhUsaLatLong = {
   lat : dmsToDeg(39, 43, 46),
-    lon : -dmsToDeg(84, 3, 44)
+  lon : -dmsToDeg(84, 3, 44)
 };
 // Agrees with Stellarium!
 var me = RaDec2AzEl(aldebaranCelestial.ra, aldebaranCelestial.dec,
                     beavercreekOhUsaLatLong.lat, beavercreekOhUsaLatLong.lon,
                     new Date());
+var meTimeObj = (d, {ra, dec}) => RaDec2AzEl(
+    ra, dec, beavercreekOhUsaLatLong.lat, beavercreekOhUsaLatLong.lon, d);
 var meTime = d =>
     RaDec2AzEl(aldebaranCelestial.ra, aldebaranCelestial.dec,
                beavercreekOhUsaLatLong.lat, beavercreekOhUsaLatLong.lon, d);
@@ -57,6 +63,9 @@ var meTime = d =>
 // For plot
 var now =  new Date();
 var dateVec =
-    _.range(24*60).map(h => new Date((new Date(now)).setMinutes(now.getMinutes() + h)));
-var posVec = dateVec.map(meTime);
+    _.range(1*60).map(h => new Date((new Date(now)).setMinutes(now.getMinutes() + h)));
+var posVec = {
+  aldebaran : dateVec.map(d => meTimeObj(d, aldebaranCelestial)),
+  sol : dateVec.map(d => meTimeObj(d, solCelestial))
+};
 
